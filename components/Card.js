@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const Card = ({number}) => {
   const cards = [
@@ -12,7 +13,10 @@ const Card = ({number}) => {
   ];
 
   return (
+    <View>
     <Image style={styles.cardImgStyles} source={cards[number]} />
+    <FontAwesome name="user" size={40} style={{zIndex:3, position:'absolute', alignSelf:'center', justifyContent:'center'}} />
+    </View>
   )
 }
 

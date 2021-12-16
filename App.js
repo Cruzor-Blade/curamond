@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, } from 'react-native';
-import HomeScreen from './screens/HomeScreen';
+import { NavigationContainer } from '@react-navigation/native'
+import HomeDrawer from './navigation/HomeDrawer';
 
 const App = () => {
   return (
-    <View style={{flex:1}}>
-      <HomeScreen/>
-    </View>
+    <NavigationContainer>
+      <HomeDrawer/>
+    </NavigationContainer>
   )
 }
 

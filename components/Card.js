@@ -14,8 +14,7 @@ const Card = ({number}) => {
 
   return (
     <View>
-    <Image style={styles.cardImgStyles} source={cards[number]} />
-    <FontAwesome name="user" size={40} style={{zIndex:3, position:'absolute', alignSelf:'center', justifyContent:'center'}} />
+      <Image style={styles.cardImgStyles} source={cards[number]} />
     </View>
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, ImageBackground, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, ImageBackground, StyleSheet, Dimensions } from 'react-native';
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import Card from '../components/Card';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -11,7 +12,7 @@ const Home = ({navigation}) => {
   const numbers = [0, 1, 2, 3, 4, 5]
   return (
     <ImageBackground source={require("../assets/background.jpg")} style={styles.container}>
-        <FlatList
+        <SwiperFlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.flatList}

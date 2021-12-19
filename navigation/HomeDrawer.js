@@ -52,7 +52,7 @@ export default HomeDrawer;
 const styles = StyleSheet.create({
     header:{
         height:58,
-        backgroundColor:"#151515"
+        backgroundColor:"#0d0909"
     },
     aboutIcon:{
         height:25,

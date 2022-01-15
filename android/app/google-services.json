@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "894002875759",
+    "project_id": "curamond",
+    "storage_bucket": "curamond.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894002875759:android:498de845bf22477515ec9a",
+        "android_client_info": {
+          "package_name": "com.curamond"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894002875759-u3gn365vkvcm60ti5lbqop2pfahkomtl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAG28KgEHNJ-Jo7gs6hFqtPeLFWKstfP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894002875759-u3gn365vkvcm60ti5lbqop2pfahkomtl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

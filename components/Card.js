@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, StyleSheet, Text, Dimensions, FlatList } from 'react-native';
+import { Image, View, StyleSheet, Text, Dimensions, FlatList, ImageStore } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
@@ -17,7 +17,8 @@ const Card = ({item}) => {
     7:[require("../assets/images/7.jpeg")],
     };
 
-    const images = imgs[item.images]
+    const images = imgs[item.images];
+    console.log("Images, ", images)
 
   return (
    <View style={styles.card}>
@@ -25,6 +26,18 @@ const Card = ({item}) => {
         <View style={styles.bodyCard} ><Text style={styles.body}>{item.body}</Text></View>
         {images.map (image => <Image source={image} style={{width:windowWidth*11/13, maxHeight:410, resizeMode:'contain'}} />)}
       </ScrollView>
+      {/* <FlatList
+        ListHeaderComponent={() => <View style={styles.bodyCard} ><Text style={styles.body}>{item.body}</Text></View>}
+        data={images}
+        pagingEnabled={true}
+        keyExtractor={img => images.indexOf(img)}
+        renderItem={({image}) => {
+          console.log(image)
+          return (
+          <Image source={image} style={{width:windowWidth*11/13, maxHeight:410, resizeMode:'contain'}} />
+        )}}
+      
+      /> */}
    </View>
   )
 }

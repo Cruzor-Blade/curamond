@@ -46,7 +46,7 @@ export default Card;
 
 const styles = StyleSheet.create({
   card:{
-    width:windowWidth*(12/13),
+    width:windowWidth*(25/26),
     maxHeight:430,
     borderWidth:1,
     borderColor:"#333333",
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#0f0602',
     paddingHorizontal:15,
     paddingVertical:20,
-    marginHorizontal:windowWidth*(1/26),
+    marginHorizontal:windowWidth*(1/52),
     borderRadius:30,
     alignItems:'center',
     justifyContent:'center'

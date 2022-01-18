@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import Antdesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
@@ -8,6 +9,7 @@ import Home from '../screens/Home';
 import About from '../screens/About';
 
 import CustomDrawer from '../components/CustomDrawer';
+import Post from '../screens/Post';
 
 const HomeDrawer = () => {
     const Drawer = createDrawerNavigator();
@@ -40,6 +42,13 @@ const HomeDrawer = () => {
                         <View style={[styles.aboutIcon, {borderColor:color}]}>
                             <Entypo name="info" size={16} color={color} />
                         </View>
+                    )
+                }}
+            />
+            <Drawer.Screen name="Post" component={Post} 
+                options={{
+                    drawerIcon : ({color}) => (
+                        <Antdesign name="upload" size={22} color={color} />
                     )
                 }}
             />

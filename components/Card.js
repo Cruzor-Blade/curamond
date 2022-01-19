@@ -23,7 +23,7 @@ const Card = ({item}) => {
   return (
    <View style={styles.card}>
       <ScrollView pagingEnabled={true}>
-        <View style={styles.bodyCard} ><Text style={styles.body}>{item.body}</Text></View>
+        <View style={styles.bodyCard} ><Text selectable={true} style={styles.body}>{item.body}</Text></View>
         {images.map (image => <Image source={image} style={{width:windowWidth*11/13, maxHeight:410, resizeMode:'contain'}} />)}
       </ScrollView>
       {/* <FlatList

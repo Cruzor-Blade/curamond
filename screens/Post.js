@@ -81,10 +81,9 @@ const AddPostScreen = () => {
 
     firestore()
     .collection('posts')
-    .doc('approved')
-    .collection(topic)
     .add({
     //   userId: user.uid,
+      topic,
       post: post,
       postImg: [imageUrl],
       postTime: firestore.Timestamp.fromDate(new Date()),

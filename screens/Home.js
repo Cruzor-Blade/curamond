@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, ImageBackground, StyleSheet, Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import firestore from '@react-native-firebase/firestore';
 import Card from '../components/Card';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -10,6 +10,23 @@ import Entypo from 'react-native-vector-icons/Entypo';
 export const windowWidth = Dimensions.get("window").width;
 
 const Home = ({navigation}) => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    firestore()
+    .collection('posts')
+    .get()
+    .then(snapshot => {
+      var receivedPosts = [];
+      snapshot.forEach(document =>{
+        const {comments, body, images, topic} = document.data();
+        console.table(receivedPosts)
+        receivedPosts.push({id:document.id ,comments, body, images, topic});
+      })
+      console.log(receivedPosts)
+      setPosts(receivedPosts);
+    })
+  }, [])
   const curiosities = [
     {
       id:1,
@@ -54,7 +71,7 @@ const Home = ({navigation}) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.flatList}
-          data={curiosities}
+          data={posts}
           keyExtractor={item => item.id}
           renderItem={({item}) => <Card item={item} />}
         />

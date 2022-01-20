@@ -85,6 +85,7 @@ const AddPostScreen = () => {
     .doc('lastPost')
     .get()
     .then(async snapshot => {
+      // const stringId = "000000"
       const {index} = snapshot.data();
       const stringId = "0".repeat(6 - `${index+1}`.length) + `${index+1}`;
       
@@ -94,11 +95,11 @@ const AddPostScreen = () => {
       .doc(stringId)
       .set({
         topic,
-        post: post,
-        postImg: [imageUrl],
+        body: post,
+        images: [{url:imageUrl, ImgDimensions:imgDims}],
         postTime: firestore.Timestamp.fromDate(new Date()),
         likes: null,
-        ImgDimensions:imgDims,
+        // ImgDimensions:imgDims,
         reactions:0,
         comments:0,
       }).catch(error => console.log('Something went wrong while adding post to firestore.', error))

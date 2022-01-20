@@ -74,35 +74,53 @@ const AddPostScreen = () => {
     });
   };
 
+
   const submitPost = async () => {
     const imageUrl = await uploadImage();
     console.log('Image Url: ', imageUrl);
     console.log('Post: ', post);
 
-    firestore()
-    .collection('posts')
-    .add({
-    //   userId: user.uid,
-      topic,
-      post: post,
-      postImg: [imageUrl],
-      postTime: firestore.Timestamp.fromDate(new Date()),
-      likes: null,
-      ImgDimensions:imgDims,
-      reactions:0,
-      comments:0,
+    await firestore()
+    .collection('metadata')
+    .doc('lastPost')
+    .get()
+    .then(async snapshot => {
+      const {index} = snapshot.data();
+      const stringId = "0".repeat(6 - `${index+1}`.length) + `${index+1}`;
+      
+      //Upload the document to firestore with the current id
+      await firestore()
+      .collection('posts')
+      .doc(stringId)
+      .set({
+        topic,
+        post: post,
+        postImg: [imageUrl],
+        postTime: firestore.Timestamp.fromDate(new Date()),
+        likes: null,
+        ImgDimensions:imgDims,
+        reactions:0,
+        comments:0,
+      }).catch(error => console.log('Something went wrong while adding post to firestore.', error))
+
+      firestore()
+      .collection('metadata')
+      .doc('lastPost')
+      .update({'index': firestore.FieldValue.increment(1)})
+      .catch(error => {
+        console.log("Error while incrementing the last postindex value", error)
+      });
+
+    }).catch(error => {
+      console.log("Error while getting the last post index", error)
     })
-    .then(() => {
-      console.log('Post Added!');
-      Alert.alert(
-        "Post Ajoute",
-        "La curiosite a ete ajoutee avec succes!",
-      );
-      setPost(null);
-    })
-    .catch((error) => {
-      console.log('Something went wrong with added post to firestore.', error);
-    });
+
+    Alert.alert(
+      "Post Ajoute",
+      "La curiosite a ete ajoutee avec succes!",
+    );
+    setPost(null);
+
   }
 
   const uploadImage = async () => {

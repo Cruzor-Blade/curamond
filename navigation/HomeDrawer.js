@@ -5,7 +5,8 @@ import Antdesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-import Home from '../screens/Home';
+import HomeStack from './HomeStack';
+// import Home from '../screens/Home';
 import About from '../screens/About';
 
 import CustomDrawer from '../components/CustomDrawer';
@@ -29,11 +30,12 @@ const HomeDrawer = () => {
                 )
             }}
             >
-            <Drawer.Screen name="Home" component={Home} 
+            <Drawer.Screen name="Home" component={HomeStack} 
                 options={{
                     drawerIcon : ({color}) => (
                         <Ionicons name="home-outline" size={22} color={color} />
-                    )
+                    ),
+                    drawerStyle:{width:300}
                 }}
             />
             <Drawer.Screen name="About" component={About}

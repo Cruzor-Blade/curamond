@@ -1,10 +1,17 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native'
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import HomeDrawer from './navigation/HomeDrawer';
 
 const App = () => {
+  const navTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: 'transparent'
+    }
+  }
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navTheme} >
       <HomeDrawer/>
     </NavigationContainer>
   )

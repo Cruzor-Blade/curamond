@@ -88,7 +88,7 @@ const Home = ({navigation}) => {
       <View style={styles.menuTab}>
         {/* <AntDesign style={{padding:3}} name="star" size={26} color="#fff" /> */}
         <AntDesign style={{padding:3}} name="staro" size={26} color="#fff" />
-        <Entypo style={{padding:3}} name="chat" size={26} color="#fff" />
+        <Entypo style={{padding:3}} name="chat" size={26} color="#fff" onPress={() => navigation.navigate('CommentsScreen')} />
         <Foundation style={{padding:3}} name="share" size={26} color="#fff" onPress={captureViewShot} />
         {/* <AntDesign style={{padding:3}} name="downcircleo" size={26} color="#fff" /> */}
         {/* <AntDesign style={{padding:3}} name="totop" size={26} color="#fff" /> */}

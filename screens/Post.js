@@ -95,7 +95,7 @@ const AddPostScreen = () => {
       .doc(stringId)
       .set({
         topic,
-        body: post,
+        body: {fr:post},
         images: [{url:imageUrl, ImgDimensions:imgDims}],
         postTime: firestore.Timestamp.fromDate(new Date()),
         likes: null,

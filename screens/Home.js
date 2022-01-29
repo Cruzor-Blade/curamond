@@ -16,7 +16,8 @@ export const windowWidth = Dimensions.get("window").width;
 const Home = ({navigation}) => {
   const [posts, setPosts] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(null);
-  const [postShot, setPostShot] = useState(null);
+  const [showAd, setShowAd] = useState(false);
+  const [shotLoading, setShotLoading] = useState(false);
 
   const viewShotRef = useRef(null);
   const viewConfig = useRef ({viewAreaCoveragePercentThreshold: 50}).current
@@ -39,13 +40,17 @@ const Home = ({navigation}) => {
       }
 
   const captureViewShot = async () => {
-    try {
-      const imageURI = await viewShotRef.current.capture()
-      console.log(imageURI)
-      setPostShot(imageURI)
-      shareCapture(imageURI)
-    } catch (e) {
-      console.log(e)
+    if (currentIndex) {
+      setShowAd(true);
+      setShotLoading(true);
+      try {
+        const imageURI = await viewShotRef.current.capture();
+         setShowAd(false);
+        await shareCapture(imageURI);
+        setShotLoading(false);
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 
@@ -77,7 +82,11 @@ const Home = ({navigation}) => {
           data={posts}
           keyExtractor={item => item.id}
           renderItem={({item}) => item.id == currentIndex ? 
-          <ViewShot ref={viewShotRef} options={{format:'jpg', quality:0.8}} ><Card item={item} /></ViewShot>  :  <Card item={item} />}
+          <ViewShot ref={viewShotRef} options={{format:'jpg', quality:1}} >
+            <Card loading={shotLoading} showAd={showAd} item={item} />
+          </ViewShot>
+          :
+          <Card item={item} />}
       
           scrollEventThrottle={32}
           viewabilityConfig={viewConfig}

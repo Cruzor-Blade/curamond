@@ -10,6 +10,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Foundation from 'react-native-vector-icons/Foundation';
 import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const windowWidth = Dimensions.get("window").width;
 
@@ -18,13 +19,17 @@ const Home = ({navigation}) => {
   const [currentIndex, setCurrentIndex] = useState(null);
   const [showAd, setShowAd] = useState(false);
   const [shotLoading, setShotLoading] = useState(false);
+  const [isStarred, setIsStarred] = useState(false);
 
   const viewShotRef = useRef(null);
   const viewConfig = useRef ({viewAreaCoveragePercentThreshold: 50}).current
   const viewableItemsChanged = useRef(({viewableItems}) => {
-    setCurrentIndex(viewableItems[0].key)
-      }
-  ).current
+    setCurrentIndex(viewableItems[0].key);
+    }
+  ).current;
+
+  const currentPostRef = firestore().collection('posts').doc(currentIndex);
+  console.log("CurrentIndex", currentIndex)
 
       const shareCapture = async (imgURI) => {
         const shareOptions = {
@@ -54,7 +59,68 @@ const Home = ({navigation}) => {
     }
   }
 
-  console.log("Index: ", currentIndex)
+
+  const checkStarred = async () => {
+    const starredString = await AsyncStorage.getItem('starred');
+    console.log("STarred String: ", starredString)
+    if (starredString) {
+      const starredArray = starredString.split(" ");
+      if (starredArray.includes(currentIndex)) {
+        console.log("Starred Array includes currentIndex", currentIndex);
+        setIsStarred(true);
+      } else {
+        setIsStarred(false);
+        console.log("Starred Array doesn't includes currentIndex", currentIndex);
+      }
+    } else {
+      setIsStarred(false);
+    }
+  }
+
+  const handleStar = async () => {
+    console.log("User pressed handleStar !")
+    try {
+      var starred = await AsyncStorage.getItem('starred');
+      if (!starred) {
+        await AsyncStorage.setItem('starred', currentIndex);
+        checkStarred();
+        currentPostRef
+        .update({'likes': firestore.FieldValue.increment(1)})
+        .catch(error => {
+          console.log("Error while incrementing the current post stars", error)
+        });
+      } else {
+          const alreadyStarred = starred.split(" ");
+          let newStarred;
+          if (alreadyStarred.includes(currentIndex)) {
+            newStarred = (alreadyStarred.filter(value => value != currentIndex)).join(" ");
+            currentPostRef
+            .update({'likes': firestore.FieldValue.increment(-1)})
+            .catch(error => {
+              console.log("Error while incrementing the current post stars", error)
+            });
+          } else {
+            newStarred = starred + ' '+ currentIndex;
+            currentPostRef
+            .update({'likes': firestore.FieldValue.increment(1)})
+            .catch(error => {
+              console.log("Error while incrementing the current post stars", error)
+            });
+          }
+          await AsyncStorage.setItem('starred', newStarred);
+          checkStarred()
+          console.log('New starred', newStarred)
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    console.log('currentIndex Stored!');
+  }
+
+  useEffect(() => {
+    checkStarred();
+  }, [currentIndex])
+  
   useEffect(() => {
     firestore()
     .collection('posts')
@@ -66,7 +132,7 @@ const Home = ({navigation}) => {
         console.table(receivedPosts)
         receivedPosts.push({id:document.id ,comments, body: body.fr, images, topic});
       })
-      console.log(receivedPosts)
+      // console.log(receivedPosts)
       setPosts(receivedPosts);
     })
   }, [])
@@ -96,7 +162,7 @@ const Home = ({navigation}) => {
 
       <View style={styles.menuTab}>
         {/* <AntDesign style={{padding:3}} name="star" size={26} color="#fff" /> */}
-        <AntDesign style={{padding:3}} name="staro" size={26} color="#fff" />
+        <AntDesign style={{padding:3}} name={ isStarred ? "star" : "staro"} size={26} color="#fff" onPress={handleStar} />
         <Entypo style={{padding:3}} name="chat" size={26} color="#fff" onPress={() => navigation.navigate('CommentsScreen', {postId:currentIndex})} />
         <Foundation style={{padding:3}} name="share" size={26} color="#fff" onPress={captureViewShot} />
         {/* <AntDesign style={{padding:3}} name="downcircleo" size={26} color="#fff" /> */}

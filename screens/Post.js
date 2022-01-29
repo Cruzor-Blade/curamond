@@ -98,7 +98,7 @@ const AddPostScreen = () => {
         body: {fr:post},
         images: [{url:imageUrl, ImgDimensions:imgDims}],
         postTime: firestore.Timestamp.fromDate(new Date()),
-        likes: null,
+        likes: 0,
         // ImgDimensions:imgDims,
         reactions:0,
         comments:0,

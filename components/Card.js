@@ -21,7 +21,7 @@ const Card = ({item, loading, showAd}) => {
               source={{uri:image.url}}
               style={[{width:windowWidth*11.7/13, height:((windowWidth*11.7/13)/image.ImgDimensions.width)*image.ImgDimensions.height},
               styles.images]}/>
-                <Image source={require("../assets/ad.png")} style={[styles.ad, {opacity :showAd ? 1 : 1}]} />
+                <Image source={require("../assets/ad.png")} style={[styles.ad, {opacity :showAd ? 1 : 0}]} />
               </>
               )}
             {loading && <ActivityIndicator size={28} style={{position:'absolute', alignSelf:'center'}} />}
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     position:'absolute',
     bottom:15,
     left:20,
-    width:95,
+    width:100,
     resizeMode:'contain'
 }
-})
+});

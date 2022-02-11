@@ -20,6 +20,7 @@ const Home = ({navigation}) => {
   const [showAd, setShowAd] = useState(false);
   const [shotLoading, setShotLoading] = useState(false);
   const [isStarred, setIsStarred] = useState(false);
+  const [lastIndex, setLastIndex] = useState(null);
 
   const viewShotRef = useRef(null);
   const viewConfig = useRef ({viewAreaCoveragePercentThreshold: 50}).current
@@ -117,25 +118,52 @@ const Home = ({navigation}) => {
     console.log('currentIndex Stored!');
   }
 
-  useEffect(() => {
-    checkStarred();
-  }, [currentIndex])
-  
-  useEffect(() => {
+  const nextIndex = (idx) => {
+    const trunc = `${(Number(idx)+1)}`;
+    return trunc + '0'.repeat(6-trunc.length);
+  }
+
+  const fetchPosts = (number, lastId) => {
     firestore()
     .collection('posts')
+    .where('__name__', '>=', lastId || '000001')
+    .limit(number)
     .get()
     .then(snapshot => {
       var receivedPosts = [];
       snapshot.forEach(document =>{
         const {comments, body, images, topic} = document.data();
-        console.table(receivedPosts)
         receivedPosts.push({id:document.id ,comments, body: body.fr, images, topic});
       })
       // console.log(receivedPosts)
-      setPosts(receivedPosts);
+      if (posts.length != 0) {
+        setPosts(posts.concat(receivedPosts));
+      } else {
+        setPosts(receivedPosts);
+      }
     })
-  }, [])
+  }
+
+  const onEndReached = () => {
+    if (currentIndex) {
+      fetchPosts(4, nextIndex(currentIndex));
+    }
+    console.log('onEndReached')
+  }
+
+  useEffect(() => {
+    checkStarred();
+    if (currentIndex) {
+      AsyncStorage.setItem('lastIndex', currentIndex);
+    }
+  }, [currentIndex]);
+  
+  useEffect(() => {
+    AsyncStorage.getItem('lastIndex').then(value => {
+      setLastIndex(value)
+      fetchPosts(3, value);
+    })
+  }, []);
 
 
   return (
@@ -157,6 +185,9 @@ const Home = ({navigation}) => {
           scrollEventThrottle={32}
           viewabilityConfig={viewConfig}
           onViewableItemsChanged={viewableItemsChanged}
+        
+          onEndReached={onEndReached}
+          onEndReachedThreshold={posts ? 1/(posts.length) : 0}
         />
 
 

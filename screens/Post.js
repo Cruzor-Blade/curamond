@@ -95,12 +95,11 @@ const AddPostScreen = () => {
       .doc(stringId)
       .set({
         topic,
-        body: {fr:post},
+        body: {en:post},
         images: [{url:imageUrl, ImgDimensions:imgDims}],
         postTime: firestore.Timestamp.fromDate(new Date()),
         likes: 0,
         // ImgDimensions:imgDims,
-        reactions:0,
         comments:0,
       }).catch(error => console.log('Something went wrong while adding post to firestore.', error))
 
@@ -227,7 +226,7 @@ const AddPostScreen = () => {
         <InputField
           placeholder="Entrez le contenu ici..."
           multiline
-          numberOfLines={4}
+          numberOfLines={8}
           value={post}
           onChangeText={(content) => setPost(content)}
         />

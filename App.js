@@ -1,6 +1,7 @@
 import React from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import HomeDrawer from './navigation/HomeDrawer';
+import { AppProvider } from './context/AppContext';
 
 const App = () => {
   const navTheme = {
@@ -10,10 +11,13 @@ const App = () => {
       background: 'transparent'
     }
   }
+
   return (
-    <NavigationContainer theme={navTheme} >
-      <HomeDrawer/>
-    </NavigationContainer>
+    <AppProvider>
+      <NavigationContainer theme={navTheme} >
+        <HomeDrawer/>
+      </NavigationContainer>
+    </AppProvider>
   )
 }
 

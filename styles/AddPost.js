@@ -17,6 +17,8 @@ export const InputField = styled.TextInput`
     margin-bottom: 5px;
     position:   relative;
     border-width: 1px;
+    border-radius: 8px;
+    margin-top: 20px;
 `;
 
 export const AddImage = styled.Image`

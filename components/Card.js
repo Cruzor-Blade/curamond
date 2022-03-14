@@ -24,7 +24,7 @@ const Card = ({item, loading, showAd}) => {
                 <Image source={require("../assets/ad.png")} style={[styles.ad, {opacity :showAd ? 1 : 0}]} />
               </>
               )}
-            {loading && <ActivityIndicator size={28} style={{position:'absolute', alignSelf:'center'}} />}
+            {loading ? <ActivityIndicator size={28} style={{position:'absolute', alignSelf:'center'}} /> : null}
           </View>
         </ScrollView>
     </View>
@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
     },
     backgroundColor:'#1f1d26',
     paddingHorizontal:10,
-    paddingVertical:10,
+    paddingTop:12,
+    paddingBottom:8,
     marginHorizontal:windowWidth*(1/52),
     borderRadius:30,
     alignItems:'center',
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     position:'absolute',
     bottom:15,
     left:20,
-    width:100,
+    width:120,
     resizeMode:'contain'
 }
 });

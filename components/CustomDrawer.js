@@ -19,7 +19,7 @@ const CustomDrawer = (props) => {
             <TouchableOpacity style={{paddingVertical:5}}>
                 <View style={styles.bottomDrawer}>
                     <Ionicons name="share-social-outline" size={22} style={{color:"#fff", marginRight:10}} />
-                    <Text style={{fontSize:15, color:"#fff"}}>Share with A Friend</Text>
+                    <Text style={{fontSize:15, color:"#fff"}}>Share with a Friend</Text>
                 </View>
             </TouchableOpacity>
         </View>

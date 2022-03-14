@@ -35,7 +35,8 @@ const HomeDrawer = () => {
                     drawerIcon : ({color}) => (
                         <Ionicons name="home-outline" size={22} color={color} />
                     ),
-                    drawerStyle:{width:300}
+                    drawerStyle:{width:300},
+                    headerShown:false
                 }}
             />
             <Drawer.Screen name="About" component={About}

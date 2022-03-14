@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { View, ImageBackground, StyleSheet, Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import firestore from '@react-native-firebase/firestore';
@@ -11,10 +11,13 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppContext } from '../context/AppContext';
 
 export const windowWidth = Dimensions.get("window").width;
 
 const Home = ({navigation}) => {
+  const {setCurrentTopic, setNumStars} = useContext(AppContext);
+
   const [posts, setPosts] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(null);
   const [showAd, setShowAd] = useState(false);
@@ -132,8 +135,8 @@ const Home = ({navigation}) => {
     .then(snapshot => {
       var receivedPosts = [];
       snapshot.forEach(document =>{
-        const {comments, body, images, topic} = document.data();
-        receivedPosts.push({id:document.id ,comments, body: body.fr, images, topic});
+        const {comments, body, images, topic, likes} = document.data();
+        receivedPosts.push({id:document.id ,comments, body: body.en, images, topic, likes});
       })
       // console.log(receivedPosts)
       if (posts.length != 0) {
@@ -156,6 +159,13 @@ const Home = ({navigation}) => {
     if (currentIndex) {
       AsyncStorage.setItem('lastIndex', currentIndex);
     }
+
+    const currentItem = posts.filter(post => post.id === currentIndex);
+    if (currentItem[0]) {
+      setCurrentTopic(currentItem[0].topic);
+      setNumStars(currentItem[0].likes);
+    }
+    console.log('Current item: ', currentItem)
   }, [currentIndex]);
   
   useEffect(() => {

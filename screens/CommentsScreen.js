@@ -162,7 +162,7 @@ const CommentsScreen = ({route}) => {
       <Modal visible={modalVisible} style={styles.overlay}>
         <View style={styles.textContainer}>
           <View style={styles.header}>
-            <Text style={{fontSize:18, fontWeight:'bold'}}>Entrez un nom d'utilisateur</Text>
+            <Text style={{fontSize:18, fontWeight:'bold'}}>Enter a username</Text>
             <AntDesign
                 name="closecircle"
                 color="#666666"
@@ -175,16 +175,16 @@ const CommentsScreen = ({route}) => {
           </View>
         <View style={{flexDirection:'row', alignItems:"center"}} >
           <TextInput
-          placeholder="Entrez le nom d'utilisateur ici"
+          placeholder="Enter your username here"
           style={styles.usernameTextInput}
           value={inputUsername}
           onChangeText={text => setInputUsername(text)}
           />
           <TouchableOpacity onPress={() => validateUsername()} >
-            <View style={styles.usernameButton} ><Text style={{color:"#ffffff"}} >Effectue</Text></View>
+            <View style={styles.usernameButton} ><Text style={{color:"#ffffff"}} >Done</Text></View>
           </TouchableOpacity>
         </View>
-        <View style={{marginTop:40}} ><Text style={{fontSize:17, fontWeight:"700"}} >Note: Vous devez avoir un nom d'utilisateur pour pouvoir commenter les publications Curamond</Text></View>
+        <View style={{marginTop:40}} ><Text style={{fontSize:17, fontWeight:"700"}} >Note: you must have a username in order to comment.</Text></View>
         </View>
       </Modal>
     </View>

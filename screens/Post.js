@@ -189,38 +189,38 @@ const AddPostScreen = () => {
               onValueChange={(itemTopic, itemIndex) => setTopic(itemTopic)}
               style={{width:windowWidth*0.9, height:55}}
               >
+              <Picker.Item label="Advises" value="advises" />
               <Picker.Item label="Aliments" value="aliments" />
-              <Picker.Item label="Amour" value="love" />
-              <Picker.Item label="Animaux" value="animals" />
-              <Picker.Item label="Astuces" value="tips" />
-              <Picker.Item label="Celebrites" value="celebrities" />
-              <Picker.Item label="Cerveau" value="brain" />
+              <Picker.Item label="Animals" value="animals" />
+              <Picker.Item label="Brain" value="brain" />
+              <Picker.Item label="Celebrities" value="celebrities" />
+              <Picker.Item label="Cars" value="cars" />
               <Picker.Item label="Cinema" value="cinema" />
-              <Picker.Item label="Conseils" value="advises" />
-              <Picker.Item label="CorpsHumain" value="humanBody" />
-              <Picker.Item label="Drole" value="funny" />
-              <Picker.Item label="Espace" value="space" />
-              <Picker.Item label="Faits" value="facts" />
-              <Picker.Item label="Flore" value="flora" />
-              <Picker.Item label="Histoire" value="history" />
-              <Picker.Item label="Humour" value="humor" />
-              <Picker.Item label="Informatique" value="computers" />
-              <Picker.Item label="Insolite" value="freaky" />
-              <Picker.Item label="Jeux Videos" value="videoGames" />
-              <Picker.Item label="Langues" value="languages" />
-              <Picker.Item label="Musique" value="music" />
+              <Picker.Item label="Computers" value="computers" />
+              <Picker.Item label="Country" value="country" />
+              <Picker.Item label="Facts" value="facts" />
+              <Picker.Item label="Flora" value="flora" />
+              <Picker.Item label="Freaky" value="freaky" />
+              <Picker.Item label="Funny" value="funny" />
+              <Picker.Item label="Health" value="health" />
+              <Picker.Item label="History" value="history" />
+              <Picker.Item label="Human Body" value="humanBody" />
+              <Picker.Item label="Humor" value="humor" />
+              <Picker.Item label="Knowledge" value="knowledge" />
+              <Picker.Item label="Languages" value="languages" />
+              <Picker.Item label="Love" value="love" />
+              <Picker.Item label="Music" value="music" />
               <Picker.Item label="Oceans" value="oceans" />
-              <Picker.Item label="Relations" value="relationships" />
-              <Picker.Item label="Phobies" value="phobias" />
+              <Picker.Item label="Phobias" value="phobias" />
               <Picker.Item label="Populations" value="population" />
-              <Picker.Item label="Psychologie" value="psychology" />
+              <Picker.Item label="Psychology" value="psychology" />
               <Picker.Item label="Quotes" value="motivation" />
-              <Picker.Item label="Societe" value="society" />
-              <Picker.Item label="Savoir" value="knowledge" />
-              <Picker.Item label="Sante" value="health" />
-              <Picker.Item label="Sexe" value="sex" />
-              <Picker.Item label="Pays" value="country" />
-              <Picker.Item label="Voitures" value="cars" />
+              <Picker.Item label="Relationsships" value="relationships" />
+              <Picker.Item label="Sex" value="sex" />
+              <Picker.Item label="Society" value="society" />
+              <Picker.Item label="Space" value="space" />
+              <Picker.Item label="Tips" value="tips" />
+              <Picker.Item label="Video Games" value="videoGames" />
           </Picker>
         </View>
         <InputField

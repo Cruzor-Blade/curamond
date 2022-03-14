@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import HomeDrawer from './navigation/HomeDrawer';
 import { AppProvider } from './context/AppContext';
+import RNBootSplash from "react-native-bootsplash";
+
 
 const App = () => {
   const navTheme = {
@@ -10,8 +12,12 @@ const App = () => {
       ...DefaultTheme.colors,
       background: 'transparent'
     }
+
   }
 
+  useEffect(() => {
+    RNBootSplash.hide({fade:true})
+  }, [])
   return (
     <AppProvider>
       <NavigationContainer theme={navTheme} >

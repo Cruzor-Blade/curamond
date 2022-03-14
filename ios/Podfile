@@ -14,6 +14,8 @@ target 'Curamond' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNBootSplash', :path => '../node_modules/react-native-bootsplash'
+
   target 'CuramondTests' do
     inherit! :complete
     # Pods for testing

@@ -23,7 +23,7 @@ const Home = ({navigation}) => {
   const [showAd, setShowAd] = useState(false);
   const [shotLoading, setShotLoading] = useState(false);
   const [isStarred, setIsStarred] = useState(false);
-  const [lastIndex, setLastIndex] = useState(null);
+  const [handlingStar, setHandlingStar] = useState(false);
 
   const viewShotRef = useRef(null);
   const viewConfig = useRef ({viewAreaCoveragePercentThreshold: 50}).current
@@ -83,42 +83,51 @@ const Home = ({navigation}) => {
 
   const handleStar = async () => {
     console.log("User pressed handleStar !")
-    try {
-      var starred = await AsyncStorage.getItem('starred');
-      if (!starred) {
-        await AsyncStorage.setItem('starred', currentIndex);
-        checkStarred();
-        currentPostRef
-        .update({'likes': firestore.FieldValue.increment(1)})
-        .catch(error => {
-          console.log("Error while incrementing the current post stars", error)
-        });
-      } else {
-          const alreadyStarred = starred.split(" ");
-          let newStarred;
-          if (alreadyStarred.includes(currentIndex)) {
-            newStarred = (alreadyStarred.filter(value => value != currentIndex)).join(" ");
-            currentPostRef
-            .update({'likes': firestore.FieldValue.increment(-1)})
-            .catch(error => {
-              console.log("Error while incrementing the current post stars", error)
-            });
-          } else {
-            newStarred = starred + ' '+ currentIndex;
-            currentPostRef
-            .update({'likes': firestore.FieldValue.increment(1)})
-            .catch(error => {
-              console.log("Error while incrementing the current post stars", error)
-            });
-          }
-          await AsyncStorage.setItem('starred', newStarred);
-          checkStarred()
-          console.log('New starred', newStarred)
+    if (!handlingStar) {
+      setHandlingStar(true);
+      try {
+        var starred = await AsyncStorage.getItem('starred');
+        if (!starred) {
+          await AsyncStorage.setItem('starred', currentIndex);
+          await checkStarred();
+          await currentPostRef
+          .update({'likes': firestore.FieldValue.increment(1)})
+          .catch(error => {
+            console.log("Error while incrementing the current post stars", error)
+          });
+        } else {
+            const alreadyStarred = starred.split(" ");
+            let newStarred;
+            if (alreadyStarred.includes(currentIndex)) {
+              newStarred = (alreadyStarred.filter(value => value != currentIndex)).join(" ");
+              await currentPostRef
+              .update({'likes': firestore.FieldValue.increment(-1)})
+              .catch(error => {
+                console.log("Error while incrementing the current post stars", error)
+              });
+            } else {
+              newStarred = starred + ' '+ currentIndex;
+              await currentPostRef
+              .update({'likes': firestore.FieldValue.increment(1)})
+              .catch(error => {
+                console.log("Error while incrementing the current post stars", error)
+              });
+            }
+            await AsyncStorage.setItem('starred', newStarred);
+            await checkStarred()
+            console.log('New starred', newStarred)
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
+      console.log('currentIndex Stored!');
+      await currentPostRef.get()
+      .then(doc => {
+        const {likes} = doc.data();
+        setNumStars(likes);
+      });
+      setHandlingStar(false);
     }
-    console.log('currentIndex Stored!');
   }
 
   const nextIndex = (idx) => {
@@ -170,7 +179,6 @@ const Home = ({navigation}) => {
   
   useEffect(() => {
     AsyncStorage.getItem('lastIndex').then(value => {
-      setLastIndex(value)
       fetchPosts(3, value);
     })
   }, []);

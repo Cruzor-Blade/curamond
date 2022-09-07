@@ -241,7 +241,7 @@ const AddPostScreen = () => {
               submitPost();
             }
             }}>
-            <SubmitBtnText>Publier</SubmitBtnText>
+            <SubmitBtnText>Post</SubmitBtnText>
           </SubmitBtn>
         )}
       {/* </InputWrapper> */}
